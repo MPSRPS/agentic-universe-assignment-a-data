@@ -46,6 +46,8 @@ The pipeline runs in two clear phases:
 
 For PII protection, I made sure plaintext names and phone numbers are never stored in the database. Phones are hashed with HMAC-SHA256 to allow fast indexed lookups for deduplication and event linking. Customer names and last-4 phone digits are encrypted using Fernet (AES-128-CBC with HMAC). Event payloads have schema-defined PII keys stripped before saving.
 
+![Architecture Diagram](docs/architecture.png)
+
 ### Database Schema
 I designed six tables to separate clean records from quarantined or rejected data:
 - `leads`: Stores unique leads keyed by `(workflow_id, phone_hash)`. It keeps the initial `batch_id` permanently, encrypted PII, external reference, and merged attribute fields.
